@@ -9,7 +9,32 @@
       content="個人品牌網站範本：介紹個人背景、技能與數位作品集，包含日常文章與作品展示。這是單檔 index.html 的骨架，方便後續替換各區塊內容與樣式。"
     />
     <style>
-      /* ========================================================== CSS:BASE-START 全站共用基底樣式（請勿使用 ID 選擇器） ========================================================== */
+      /* ========================================================== 修正：避免任何水平捲動 ========================================================== */
+      html,
+      body {
+        overflow-x: hidden; /* 全站禁止水平捲動 */
+      }
+
+      /* 修正 hero 圖片可能撐出 container */
+      .hero-figure {
+        width: 100%;
+        max-width: 100%; /* 原本 560px → 改成 100% */
+        overflow: hidden;
+      }
+      .hero-figure img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* 修正 grid 在部分 viewport 出現 1px overflow */
+      .projects-grid,
+      .skills-grid,
+      .blogs-list {
+        overflow-x: hidden;
+      }
+
+      /* ========================================================== CSS:BASE-START 全站共用基底樣式 ========================================================== */
       *,
       *::before,
       *::after {
@@ -24,8 +49,8 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           "Helvetica Neue", Arial, "Noto Sans TC", "PingFang TC",
           "Microsoft JhengHei", "Apple LiGothic Medium", sans-serif;
-        background-color: #f6fbff; /* 淺藍調背景 */
-        color: #32383f; /* 主要文字色（深灰）*/
+        background-color: #f6fbff;
+        color: #32383f;
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -42,6 +67,7 @@
         padding-right: 16px;
         margin-left: auto;
         margin-right: auto;
+        overflow-x: hidden; /* 保險措施 */
       }
       img {
         max-width: 100%;
@@ -55,7 +81,7 @@
       }
       .muted {
         color: #6b7178;
-      } /* layout helpers */
+      }
       .flex {
         display: flex;
       }
@@ -77,7 +103,7 @@
       .section .container {
         padding-top: 8px;
         padding-bottom: 8px;
-      } /* small utility spacing */
+      }
       .spacer-sm {
         height: 8px;
       }
@@ -86,7 +112,7 @@
       }
       .spacer-lg {
         height: 32px;
-      } /* buttons (anchor-styled) */
+      }
       .btn {
         display: inline-block;
         padding: 10px 16px;
@@ -96,20 +122,22 @@
         border: 1px solid transparent;
       }
       .btn-primary {
-        background-color: #0f4c6b; /* 主色：低飽和深藍青 */
+        background-color: #0f4c6b;
         color: #ffffff;
       }
       .btn-outline {
         background: transparent;
         border-color: rgba(15, 76, 107, 0.12);
         color: #0f4c6b;
-      } /* utility for headings */
+      }
       .section-title {
         margin: 0 0 8px 0;
         font-size: 1.25rem;
         letter-spacing: -0.01em;
         color: #0f4c6b;
-      } /* CSS:BASE-END */ /* ========================================================== CSS:HERO-START Hero 區塊樣式（只使用 class / element） ========================================================== */
+      }
+
+      /* ========================================================== HERO ========================================================== */
       .section-hero {
         background: linear-gradient(
           180deg,
@@ -140,23 +168,12 @@
         gap: 10px;
         flex-wrap: wrap;
       }
-      .hero-figure {
-        width: 100%;
-        max-width: 560px;
-        margin-top: 8px;
-      }
       .hero-meta {
         font-size: 0.95rem;
         color: #59616a;
-      } /* small screens: stack */
-      .hero-grid {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: 1fr;
-      } /* CSS:HERO-END */ /* ========================================================== CSS:ABOUT-START About / Blogs 區塊樣式（About 區放日常 / Blogs 區占位） ========================================================== */
-      .section-about {
-        background: transparent;
       }
+
+      /* ========================================================== ABOUT / BLOGS ========================================================== */
       .about-card {
         background: #ffffff;
         padding: 16px;
@@ -175,10 +192,9 @@
         padding: 12px;
         border-radius: 8px;
         box-shadow: 0 1px 3px rgba(2, 6, 23, 0.04);
-      } /* CSS:ABOUT-END */ /* ========================================================== CSS:SKILLS-START Skills 區塊樣式（技能 / 小工具占位） ========================================================== */
-      .section-skills {
-        background: transparent;
       }
+
+      /* ========================================================== SKILLS ========================================================== */
       .skills-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -191,10 +207,9 @@
         display: inline-block;
         box-shadow: 0 1px 2px rgba(2, 6, 23, 0.03);
         font-size: 0.95rem;
-      } /* CSS:SKILLS-END */ /* ========================================================== CSS:PROJECTS-START Projects 區塊樣式（作品卡片占位） ========================================================== */
-      .section-projects {
-        background: transparent;
       }
+
+      /* ========================================================== PROJECTS ========================================================== */
       .projects-grid {
         display: grid;
         gap: 12px;
@@ -218,12 +233,9 @@
         margin: 0;
         color: #50575d;
         font-size: 0.95rem;
-      } /* CSS:PROJECTS-END */ /* ========================================================== CSS:CONTACT-START Contact / Footer 區塊樣式 ========================================================== */
-      .section-contact {
-        background: transparent;
-        padding-top: 24px;
-        padding-bottom: 24px;
       }
+
+      /* ========================================================== CONTACT ========================================================== */
       .contact-card {
         background: #ffffff;
         padding: 14px;
@@ -236,7 +248,9 @@
         background: transparent;
         color: #6b7178;
         font-size: 0.95rem;
-      } /* CSS:CONTACT-END */ /* ========================================================== CSS:RWD-START 手機優先 -> 平板 / 桌面樣式（至少一個 media query） ========================================================== */
+      }
+
+      /* ========================================================== RWD ========================================================== */
       @media (min-width: 600px) {
         .hero-inner {
           grid-template-columns: 1fr 1fr;
@@ -264,7 +278,9 @@
           grid-template-columns: repeat(3, 1fr);
           gap: 18px;
         }
-      } /* CSS:RWD-END */ /* ========================================================== Header/Nav styles (part of BASE but separated visually) ========================================================== */
+      }
+
+      /* ========================================================== HEADER ========================================================== */
       .site-header {
         position: sticky;
         top: 0;
@@ -308,20 +324,16 @@
         <div class="container nav">
           <div class="logo">Your Name · Frontend Dev</div>
           <nav class="nav-links" aria-label="主要導覽">
-            <!-- 注意：href 必須非空且為合法錨點 -->
             <a class="nav-link" href="#hero">首頁</a>
             <a class="nav-link" href="#about">日常</a>
             <a class="nav-link" href="#projects">作品集</a>
           </nav>
         </div>
       </header>
+
       <main>
         <div class="container">
-          <!-- ======================================================
-         SECTION:HERO-START
-         之後會用 Section SDD 的 Prompt 產生新的 section，
-         請把新的 section 程式碼整段貼在這兩個註解中間，完全取代現在這一區。
-         ====================================================== -->
+          <!-- HERO -->
           <section
             id="hero"
             class="section section-hero"
@@ -345,45 +357,37 @@
                 </div>
 
                 <p class="muted" style="margin-top: 10px; font-size: 0.9rem">
-                  之後會用 Section SDD 的 Prompt 產生正式文案與版面，再把整個
-                  section 貼回來取代這一區。
+                  之後會用 Section SDD 的 Prompt 產生正式文案與版面，
+                  再把整個 section 貼回來取代這一區。
                 </p>
               </div>
 
               <figure class="hero-figure" aria-hidden="true">
-                <!-- Unsplash 示意圖（示例） -->
                 <img
-                  src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=3c2b2f9c9b6d6a1f7a4b9f2a9d6b3e0f"
+                  src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop"
                   alt="在筆電前撰寫程式碼的前端開發者"
                   loading="lazy"
                 />
               </figure>
             </div>
           </section>
-          <!-- SECTION:HERO-END -->
 
-          <!-- ======================================================
-         SECTION:BLOGS-START
-         之後會用 Section SDD 的 Prompt 產生新的 section，
-         請把新的 section 程式碼整段貼在這兩個註解中間，完全取代現在這一區。
-         ====================================================== -->
+          <!-- BLOGS -->
           <section
             id="blogs"
             class="section section-blogs"
             aria-labelledby="blogs-heading"
           >
             <div class="container">
-              <h2 id="blogs-heading" class="section-title">
-                日常 / 部落格
-              </h2>
+              <h2 id="blogs-heading" class="section-title">日常 / 部落格</h2>
               <div class="about-card">
                 <p class="about-text">
-                  這裡目前是
-                  Blogs（或關於我）的占位內容，將來會放置日常文章與心得分享。
+                  這裡目前是 Blogs（或關於我）的占位內容，
+                  將來會放置日常文章與心得分享。
                 </p>
                 <p class="muted">
-                  之後會用 Section SDD 的 Prompt 產生新的 section，請把新的
-                  section 程式碼整段貼在這兩個註解中間，完全取代現在這一區。
+                  之後會用 Section SDD 的 Prompt 產生新的 section，
+                  請把新的區塊程式碼整段貼在這兩個註解中間。
                 </p>
               </div>
 
@@ -410,22 +414,15 @@
               </div>
             </div>
           </section>
-          <!-- SECTION:BLOGS-END -->
-          <!-- ======================================================
-         SECTION:PROJECTS-START
-         Projects（作品集）占位區
-         之後會用 Section SDD 的 Prompt 產生新的 section，
-         請把新的 section 程式碼整段貼在這兩個註解中間，完全取代現在這一區。
-         ====================================================== -->
+
+          <!-- PROJECTS -->
           <section
             id="projects"
             class="section section-projects"
             aria-labelledby="projects-heading"
           >
             <div class="container">
-              <h2 id="projects-heading" class="section-title">
-                作品集
-              </h2>
+              <h2 id="projects-heading" class="section-title">作品集</h2>
               <p class="muted">
                 這裡目前是 Projects 區的占位內容，未來會放作品卡片與案例說明。
               </p>
@@ -465,28 +462,20 @@
               </div>
 
               <p class="muted" style="margin-top: 12px">
-                之後會用 Section SDD 的 Prompt 產生新的 section，請把新的
-                section 程式碼整段貼在這兩個註解中間，完全取代現在這一區。
+                之後會用 Section SDD 的 Prompt 產生新的 section，
+                請把新的區塊程式碼整段貼在這兩個註解中間。
               </p>
             </div>
           </section>
-          <!-- SECTION:PROJECTS-END -->
 
-          <!-- ======================================================
-         SECTION:CONTACT-START
-         Contact / Footer 區
-         之後會用 Section SDD 的 Prompt 產生新的 section，
-         請把新的 section 程式碼整段貼在這兩個註解中間，完全取代現在這一區。
-         ====================================================== -->
+          <!-- CONTACT -->
           <section
             id="contact"
             class="section section-contact"
             aria-labelledby="contact-heading"
           >
             <div class="container">
-              <h2 id="contact-heading" class="section-title">
-                聯絡方式
-              </h2>
+              <h2 id="contact-heading" class="section-title">聯絡方式</h2>
               <div class="contact-card">
                 <p class="muted">
                   Email / 社群連結示意（請在部署時改為正確資料）：
@@ -509,13 +498,12 @@
                 </p>
 
                 <p class="muted" style="margin-top: 10px">
-                  之後會用 Section SDD 的 Prompt 產生新的 section，請把新的
-                  section 程式碼整段貼在這兩個註解中間，完全取代現在這一區。
+                  之後會用 Section SDD 的 Prompt 產生新的 section，
+                  請把新的區塊程式碼整段貼在這兩個註解中間。
                 </p>
               </div>
             </div>
           </section>
-          <!-- SECTION:CONTACT-END -->
         </div>
       </main>
 
